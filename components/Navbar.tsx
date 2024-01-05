@@ -7,37 +7,48 @@ import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
+import { v4 as uuidv4 } from "uuid";
 
 interface INavbar {}
 
 const Navbar = ({}: INavbar) => {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const router = useRouter();
+  const isSavedUserInfo = useRef(false);
+  const elRef = useRef<any>();
+  const { isProfileMenuOpen, setIsProfileMenuOpen } = useClickOutside(elRef);
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(firebaseApp);
 
-  const saveUserInfo = async () => {
+  const saveUserInfo = useCallback(async () => {
+    if (isSavedUserInfo.current) return;
     if (session?.user) {
       try {
         const docRef = await setDoc(doc(db, "users", session.user.email!), {
+          id: uuidv4(),
           username: session.user.name,
           email: session.user.email,
           image: session.user.image,
         });
-        console.log("Document written with ID: ");
+        isSavedUserInfo.current = true;
+        console.log("Document written with ID: " + docRef);
       } catch (e) {
         console.error("Error adding document: ", e);
       }
     }
+  }, [session?.user?.email]);
+
+  const extractStringBeforeAt = (str: string) => {
+    return str.substring(0, str.indexOf("@"));
   };
 
-  const elRef = useRef<any>();
+  const useId = extractStringBeforeAt(session?.user?.email ?? "");
 
-  const { isProfileMenuOpen, setIsProfileMenuOpen } = useClickOutside(elRef);
   const handleSignIn = () => {
     signIn("google");
   };
@@ -46,12 +57,11 @@ const Navbar = ({}: INavbar) => {
   };
 
   useEffect(() => {
-    saveUserInfo();
-    console.log("SOOS");
+    // saveUserInfo();
   }, [session]);
 
   return (
-    <div className="navbar p-4 border border-black flex items-center pl-2  md:gap-2">
+    <div className="navbar p-4  flex items-center pl-2  md:gap-2">
       <Link href="/">
         <Image
           src="icon.svg"
@@ -120,7 +130,7 @@ const Navbar = ({}: INavbar) => {
                 isProfileMenuOpen ? "flex" : "hidden"
               } absolute top-full bg-white p-3 right-0 text-lg border-gray-200 border rounded-lg gap-3 flex flex-col pr-5 text-black`}
             >
-              <Link href="/profile">Profile</Link>
+              <Link href={`/${useId}`}>Profile</Link>
               <hr />
               <button onClick={handleSignOut}>Logout</button>
             </div>

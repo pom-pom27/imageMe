@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main>SIOS</main>;
+  return <main className="flex-1">SIOS</main>;
 }

@@ -6,6 +6,10 @@ const useClickOutside = (elRef: MutableRefObject<any>) => {
   const handleClickOutside = (e: MouseEvent) => {
     if (!elRef?.current?.contains(e.target)) {
       setIsProfileMenuOpen(false);
+    } else {
+      setTimeout(() => {
+        setIsProfileMenuOpen(false);
+      }, 500);
     }
   };
 
