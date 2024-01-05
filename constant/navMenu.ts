@@ -7,10 +7,6 @@ export const navMenuLeft = [
     href: "/",
   },
   {
-    text: "Explore",
-    href: "/explore",
-  },
-  {
     text: "Create",
     href: "/create",
   },
