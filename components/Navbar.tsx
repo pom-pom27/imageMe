@@ -3,7 +3,6 @@
 import { navMenuLeft, navMenuRight } from "@/constant/navMenu";
 import firebaseApp from "@/firebaseConfig";
 import useClickOutside from "@/hooks/useClickOutside";
-import { debug } from "console";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -38,7 +37,7 @@ const Navbar = ({}: INavbar) => {
           image: session.user.image,
         });
         isSavedUserInfo.current = true;
-        debug("Document written with ID: " + docRef);
+        console.debug("Document written with ID: " + docRef);
       } catch (e) {
         console.error("Error adding document: ", e);
       }

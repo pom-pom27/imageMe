@@ -1,6 +1,5 @@
 "use client";
 import firebaseApp from "@/firebaseConfig";
-import { debug } from "console";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import {
   getDownloadURL,
@@ -37,7 +36,7 @@ const Index = ({}: IIndex) => {
 
     setIsFileSelected(true);
 
-    debug("file", e.target.files[0]);
+    console.debug("file", e.target.files[0]);
   };
 
   const handleFileUpload = () => {

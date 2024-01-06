@@ -2,7 +2,6 @@
 
 import firebaseApp from "@/firebaseConfig";
 import { PostData } from "@/types/userData";
-import { debug } from "console";
 import {
   collection,
   getDocs,
@@ -45,7 +44,7 @@ const PostGrid = ({ userId }: IPostGrid) => {
 
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      debug(doc.id, " => ", doc.data());
+      console.debug(doc.id, " => ", doc.data());
       data = [...data, doc.data() as PostData];
     });
 
