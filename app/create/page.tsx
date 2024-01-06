@@ -1,5 +1,6 @@
 "use client";
 import firebaseApp from "@/firebaseConfig";
+import { debug } from "console";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import {
   getDownloadURL,
@@ -36,7 +37,7 @@ const Index = ({}: IIndex) => {
 
     setIsFileSelected(true);
 
-    console.log("file", e.target.files[0]);
+    debug("file", e.target.files[0]);
   };
 
   const handleFileUpload = () => {
@@ -69,7 +70,7 @@ const Index = ({}: IIndex) => {
       },
       (error) => {
         // Handle unsuccessful uploads
-        console.log("Error:" + error.cause);
+        debug("Error:" + error.cause);
       },
       () => {
         setIsLoading(false);
@@ -98,7 +99,7 @@ const Index = ({}: IIndex) => {
       await setDoc(doc(db, "pinterest-post", postId), formData);
       router.push("/");
     } catch (error) {
-      console.log("Error: " + error);
+      debug("Error: " + error);
     }
   };
   return (

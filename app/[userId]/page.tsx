@@ -4,6 +4,7 @@ import PostGrid from "@/components/PostGrid";
 import UserInfo from "@/components/UserInfo";
 import firebaseApp from "@/firebaseConfig";
 import { UserData } from "@/types/userData";
+import { debug } from "console";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -28,7 +29,7 @@ const Page = ({ params }: IPage) => {
     if (docSnap.exists()) {
       setDocState(docSnap.data() as UserData);
     } else {
-      console.log("No such document!");
+      debug('"No such document!');
     }
   };
 
