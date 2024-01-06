@@ -60,7 +60,7 @@ const Navbar = ({}: INavbar) => {
   }, [session]);
 
   return (
-    <div className="navbar p-4  flex items-center pl-2  md:gap-2">
+    <div className="navbar sm:p-4 p-1  flex items-center sm:pl-2 pl-0  md:gap-2">
       <Link href="/">
         <Image
           src="/icon.svg"
@@ -75,7 +75,7 @@ const Navbar = ({}: INavbar) => {
           <Link
             href={menu.href}
             key={idx}
-            className={`p-3 px-4 ${
+            className={`sm:p-3 sm:px-4 p-2 px-3 ${
               pathname === menu.href ? "selected-nav-menu" : ""
             }`}
           >
@@ -83,6 +83,9 @@ const Navbar = ({}: INavbar) => {
           </Link>
         ))}
       </div>
+      <button className="p-2 hover:bg-gray-200 rounded-full text-2xl text-gray-500 sm:hidden block ">
+        <HiOutlineSearch />
+      </button>
       <div className=" w-full hidden sm:block">
         <form action="" className="relative">
           <input

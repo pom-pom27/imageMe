@@ -50,7 +50,7 @@ const PostGrid = ({ userId }: IPostGrid) => {
     setListPost(data);
   };
   return (
-    <div className="mt-7 px-2 md:px-5  md:columns-3 lg:columns-4 xl:columns-5 space-y-6 columns-1 sm:columns-2">
+    <div className="mt-7 px-2 md:px-5  md:columns-3 lg:columns-4 xl:columns-5 space-y-6 columns-2 sm:columns-2">
       {listPost.map((post, idx) => (
         <Post key={idx} post={post} />
       ))}
