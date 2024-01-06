@@ -37,7 +37,6 @@ const Navbar = ({}: INavbar) => {
           image: session.user.image,
         });
         isSavedUserInfo.current = true;
-        console.debug("Document written with ID: " + docRef);
       } catch (e) {
         console.error("Error adding document: ", e);
       }

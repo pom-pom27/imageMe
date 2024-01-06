@@ -44,7 +44,6 @@ const PostGrid = ({ userId }: IPostGrid) => {
 
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.debug(doc.id, " => ", doc.data());
       data = [...data, doc.data() as PostData];
     });
 

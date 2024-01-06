@@ -13,6 +13,7 @@ const Post = ({ post }: IPost) => {
         alt="post"
         width={1000}
         height={1000}
+        priority
         className="rounded-3xl"
       />
     </div>

@@ -36,7 +36,6 @@ const Index = ({}: IIndex) => {
 
     setIsFileSelected(true);
 
-    console.debug("file", e.target.files[0]);
   };
 
   const handleFileUpload = () => {
