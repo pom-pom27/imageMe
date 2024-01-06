@@ -69,7 +69,7 @@ const Index = ({}: IIndex) => {
       },
       (error) => {
         // Handle unsuccessful uploads
-        debug("Error:" + error.cause);
+        console.debug("Error:" + error.cause);
       },
       () => {
         setIsLoading(false);
@@ -98,7 +98,7 @@ const Index = ({}: IIndex) => {
       await setDoc(doc(db, "pinterest-post", postId), formData);
       router.push("/");
     } catch (error) {
-      debug("Error: " + error);
+      console.debug("Error: " + error);
     }
   };
   return (
