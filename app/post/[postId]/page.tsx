@@ -84,8 +84,8 @@ const Page = ({ params }: IPage) => {
               />
             )}
           </div>
-          <div className="flex-1 flex flex-col gap-10">
-            <div className="text-5xl font-bold ">{post?.title}</div>
+          <div className="flex-1 flex flex-col sm:gap-7 gap-4">
+            <div className="text-2xl sm:text-5xl font-bold ">{post?.title}</div>
             {user ? (
               <div className="flex gap-2">
                 <div className="flex justify-center items-center">
