@@ -1,6 +1,15 @@
 "use client";
+import firebaseApp from "@/firebaseConfig";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { RiUploadCloudFill } from "react-icons/ri";
 interface IIndex {}
@@ -11,11 +20,16 @@ const Index = ({}: IIndex) => {
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
   const [tag, setTag] = useState("");
-  const [file, setFile] = useState<File>();
-
+  const [file, setFile] = useState<File | null>(null);
   const [isFileSelected, setIsFileSelected] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  const router = useRouter();
+
+  const db = getFirestore(firebaseApp);
+  const storage = getStorage(firebaseApp);
+
+  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     setFile(e.target.files[0]);
@@ -25,14 +39,86 @@ const Index = ({}: IIndex) => {
     console.log("file", e.target.files[0]);
   };
 
+  const handleFileUpload = () => {
+    if (!session?.user) return;
+
+    if (title.length === 0 || !file) return;
+
+    const storageRef = ref(storage, `pinterest-post/${file?.name}`);
+
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        // const progress =
+        //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        // console.log("Upload is " + progress + "% done");
+        // switch (snapshot.state) {
+        //   case "paused":
+        //     console.log("Upload is paused");
+        //     break;
+        //   case "running":
+        //     console.log("Upload is running");
+        //     break;
+        // }
+
+        setIsLoading(true);
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+        console.log("Error:" + error.cause);
+      },
+      () => {
+        setIsLoading(false);
+
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          sendFormData(downloadURL);
+        });
+      }
+    );
+  };
+
+  const sendFormData = async (imgUrl: string) => {
+    const postId = Date.now().toString();
+
+    const formData = {
+      title,
+      description,
+      link,
+      tag,
+      imgUrl,
+      userId: session?.user?.email,
+      postId,
+    };
+
+    try {
+      await setDoc(doc(db, "pinterest-post", postId), formData);
+      router.push("/");
+    } catch (error) {
+      console.log("Error: " + error);
+    }
+  };
   return (
     <div className="flex flex-1 bg-gray-100 justify-center">
       <div className=" flex max-w-5xl justify-center w-full rounded-lg bg-white my-10 ">
         <form action="#" className="w-full flex p-16 py-14 flex-col gap-4">
           <div className="flex justify-center sm:justify-end order-last sm:order-first ">
-            <button className="bg-red-500 p-3 px-4 rounded-full text-white font-semibold">
-              Publish
-            </button>
+            {isLoading ? (
+              <Image src="spin.svg" alt="loading" width={70} height={70} />
+            ) : (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleFileUpload();
+                }}
+                className="bg-red-500 p-3 px-4 rounded-full text-white font-semibold hover:bg-red-600 active:bg-red-400"
+              >
+                Publish
+              </button>
+            )}
           </div>
           <div className="flex gap-10 flex-col sm:flex-row">
             <div className="w-full sm:max-w-[240px] h-[400px]  rounded-md bg-gray-400 flex justify-center items-center p-5 ">
@@ -59,7 +145,7 @@ const Index = ({}: IIndex) => {
                     name="file"
                     id="file"
                     accept="image/*"
-                    onChange={handleFileUpload}
+                    onChange={handleFileInput}
                     className="hidden"
                   />
                 </label>

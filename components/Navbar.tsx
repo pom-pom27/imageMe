@@ -8,7 +8,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,11 +16,12 @@ interface INavbar {}
 
 const Navbar = ({}: INavbar) => {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const isSavedUserInfo = useRef(false);
   const elRef = useRef<any>();
   const { isProfileMenuOpen, setIsProfileMenuOpen } = useClickOutside(elRef);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(firebaseApp);
@@ -53,7 +54,7 @@ const Navbar = ({}: INavbar) => {
     signIn("google");
   };
   const handleSignOut = () => {
-    signOut();
+    signOut({ callbackUrl: "/" });
   };
 
   useEffect(() => {
@@ -121,6 +122,7 @@ const Navbar = ({}: INavbar) => {
                 alt="photo profile"
                 width={50}
                 height={50}
+                placeholder="data:image/spin.svg"
               />
             </button>
 
@@ -128,7 +130,7 @@ const Navbar = ({}: INavbar) => {
               ref={elRef}
               className={`${
                 isProfileMenuOpen ? "flex" : "hidden"
-              } absolute top-full bg-white p-3 right-0 text-lg border-gray-200 border rounded-lg gap-3 flex flex-col pr-5 text-black`}
+              } absolute top-full bg-white p-3 right-0 text-lg border-gray-200 border rounded-lg gap-3 flex flex-col pr-5 text-black z-20`}
             >
               <Link href={`/${useId}`}>Profile</Link>
               <hr />
