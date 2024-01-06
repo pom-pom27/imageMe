@@ -19,10 +19,10 @@ interface IPostGrid {
 const PostGrid = ({ userId }: IPostGrid) => {
   const db = getFirestore(firebaseApp);
 
-  const [listPost, setListPost] = useState<PostData[]>([]);
+  const [listPost, setListPost] = useState<PostData[] | null>(null);
 
   useEffect(() => {
-    if (listPost.length === 0) {
+    if (!listPost) {
       getUserPosts();
     }
   }, []);
@@ -49,9 +49,13 @@ const PostGrid = ({ userId }: IPostGrid) => {
 
     setListPost(data);
   };
+
+  if (listPost?.length === 0)
+    return <div className="flex w-full justify-center">Pin is Empty.</div>;
+
   return (
-    <div className="mt-7 px-2 md:px-5  md:columns-3 lg:columns-4 xl:columns-5 space-y-6 columns-2 sm:columns-2">
-      {listPost.map((post, idx) => (
+    <div className="mt-7 px-2 md:px-5  md:columns-3 lg:columns-4 xl:columns-5 space-y-4 columns-2 sm:columns-2">
+      {listPost?.map((post, idx) => (
         <Post key={idx} post={post} />
       ))}
     </div>

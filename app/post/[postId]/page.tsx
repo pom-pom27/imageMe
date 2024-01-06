@@ -45,8 +45,6 @@ const Page = ({ params }: IPage) => {
     const docRef = doc(db, "users", userId);
     const docSnap = await getDoc(docRef);
 
-    console.log("userId", userId);
-
     if (docSnap.exists()) {
       setUser(docSnap.data() as UserData);
     } else {

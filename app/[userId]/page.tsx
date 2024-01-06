@@ -19,10 +19,10 @@ const Page = ({ params }: IPage) => {
   const db = getFirestore(firebaseApp);
   const email = `${params.userId}@gmail.com`;
 
-  const getUserData = async (userId: string) => {
+  const getUserData = async () => {
     if (docState) return;
 
-    const docRef = doc(db, "users", userId);
+    const docRef = doc(db, "users", email);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -33,16 +33,14 @@ const Page = ({ params }: IPage) => {
   };
 
   useEffect(() => {
-    if (params) {
-      getUserData(email);
-    }
+    getUserData();
   }, [params.userId]);
 
   return (
     <main className="flex-1 mb-7">
       <UserInfo userInfo={docState} />
       <div>
-        <PostGrid userId={session?.user?.email} />
+        <PostGrid userId={email} />
       </div>
     </main>
   );

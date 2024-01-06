@@ -56,7 +56,7 @@ const Navbar = ({}: INavbar) => {
   };
 
   useEffect(() => {
-    // saveUserInfo();
+    saveUserInfo();
   }, [session]);
 
   return (
@@ -111,7 +111,7 @@ const Navbar = ({}: INavbar) => {
         ))}
 
         {session?.user ? (
-          <div className="p-2 h-fit flex rounded-full hover:bg-gray-200  min-w-[50px] relative ">
+          <div className="p-2 h-fit flex rounded-full hover:bg-gray-200  min-w-[50px] max-w-12 sm:max-w-fit  relative ">
             <button
               onClick={() => {
                 setIsProfileMenuOpen((prev) => !prev);
@@ -121,8 +121,8 @@ const Navbar = ({}: INavbar) => {
                 src={session.user.image!}
                 className="rounded-full"
                 alt="photo profile"
-                width={50}
-                height={50}
+                width={90}
+                height={90}
                 placeholder="data:image/spin.svg"
               />
             </button>
