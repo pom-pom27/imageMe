@@ -13,7 +13,6 @@ interface IPage {
 }
 
 const Page = ({ params }: IPage) => {
-  const { data: session } = useSession();
   const [docState, setDocState] = useState<null | UserData>(null);
 
   const db = getFirestore(firebaseApp);

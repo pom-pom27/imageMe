@@ -7,7 +7,7 @@ import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { v4 as uuidv4 } from "uuid";
@@ -17,7 +17,6 @@ interface INavbar {}
 const Navbar = ({}: INavbar) => {
   const pathname = usePathname();
   const { data: session, status } = useSession();
-  const router = useRouter();
   const isSavedUserInfo = useRef(false);
   const elRef = useRef<any>();
   const { isProfileMenuOpen, setIsProfileMenuOpen } = useClickOutside(elRef);
@@ -29,7 +28,7 @@ const Navbar = ({}: INavbar) => {
     if (isSavedUserInfo.current) return;
     if (session?.user) {
       try {
-        const docRef = await setDoc(doc(db, "users", session.user.email!), {
+        await setDoc(doc(db, "users", session.user.email!), {
           id: uuidv4(),
           username: session.user.name,
           email: session.user.email,
@@ -60,7 +59,7 @@ const Navbar = ({}: INavbar) => {
   }, [session]);
 
   return (
-    <div className="navbar sm:p-4 p-1  flex items-center sm:pl-2 pl-0  md:gap-2">
+    <div className="navbar sm:p-4 p-1 pt-2   flex items-center sm:pl-2 pl-0  md:gap-2">
       <Link href="/">
         <Image
           src="/icon.svg"
@@ -123,7 +122,6 @@ const Navbar = ({}: INavbar) => {
                 alt="photo profile"
                 width={90}
                 height={90}
-                placeholder="data:image/spin.svg"
               />
             </button>
 
@@ -139,12 +137,26 @@ const Navbar = ({}: INavbar) => {
             </div>
           </div>
         ) : (
-          <button
-            onClick={handleSignIn}
-            className="p-3 px-4 hover:bg-gray-200 rounded-full font-medium"
-          >
-            Login
-          </button>
+          <div>
+            {status == "unauthenticated" && (
+              <button
+                onClick={handleSignIn}
+                className="p-3 px-4 hover:bg-gray-200 rounded-full font-medium"
+              >
+                Login
+              </button>
+            )}
+
+            {status == "loading" && (
+              <Image
+                src="/spin.svg"
+                alt="loading"
+                width={50}
+                height={50}
+                className="min-w-12"
+              />
+            )}
+          </div>
         )}
       </div>
     </div>

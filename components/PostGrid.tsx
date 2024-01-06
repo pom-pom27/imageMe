@@ -54,7 +54,7 @@ const PostGrid = ({ userId }: IPostGrid) => {
     return <div className="flex w-full justify-center">Pin is Empty.</div>;
 
   return (
-    <div className="mt-7 px-2 md:px-5  md:columns-3 lg:columns-4 xl:columns-5 space-y-4 columns-2 sm:columns-2">
+    <div className="mt-4 sm:mt-4 px-2 md:px-5  md:columns-3 lg:columns-4 xl:columns-5 space-y-4 columns-2 sm:columns-2">
       {listPost?.map((post, idx) => (
         <Post key={idx} post={post} />
       ))}
