@@ -40,13 +40,6 @@ const UserInfo = ({ userInfo }: IUserInfo) => {
           {userInfo?.email}
         </div>
       </div>
-      <button
-        onClick={() => {}}
-        key={""}
-        className="p-3 px-5  bg-gray-300 rounded-full"
-      >
-        Share
-      </button>
     </div>
   );
 };
