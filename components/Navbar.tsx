@@ -8,7 +8,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { v4 as uuidv4 } from "uuid";
 
@@ -21,7 +21,6 @@ const Navbar = ({}: INavbar) => {
   const isSavedUserInfo = useRef(false);
   const elRef = useRef<any>();
   const { isProfileMenuOpen, setIsProfileMenuOpen } = useClickOutside(elRef);
-  const [isLoading, setIsLoading] = useState(false);
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(firebaseApp);
@@ -64,7 +63,7 @@ const Navbar = ({}: INavbar) => {
     <div className="navbar p-4  flex items-center pl-2  md:gap-2">
       <Link href="/">
         <Image
-          src="icon.svg"
+          src="/icon.svg"
           alt="Pinterest logo"
           width={50}
           height={50}

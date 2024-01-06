@@ -35,7 +35,6 @@ const Index = ({}: IIndex) => {
     setFile(e.target.files[0]);
 
     setIsFileSelected(true);
-
   };
 
   const handleFileUpload = () => {
@@ -102,7 +101,7 @@ const Index = ({}: IIndex) => {
   };
   return (
     <div className="flex flex-1 bg-gray-100 justify-center">
-      <div className=" flex max-w-5xl justify-center w-full rounded-lg bg-white my-10 ">
+      <div className=" flex max-w-6xl  justify-center w-full rounded-lg bg-white sm:my-10 ">
         <form action="#" className="w-full flex p-16 py-14 flex-col gap-4">
           <div className="flex justify-center sm:justify-end order-last sm:order-first ">
             {isLoading ? (

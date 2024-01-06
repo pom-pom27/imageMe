@@ -1,5 +1,6 @@
 import { PostData } from "@/types/userData";
 import Image from "next/image";
+import Link from "next/link";
 
 interface IPost {
   post: PostData;
@@ -7,7 +8,10 @@ interface IPost {
 
 const Post = ({ post }: IPost) => {
   return (
-    <div className="rounded-3xl cursor-pointer relative flex justify-center md:block">
+    <Link
+      href={`/post/${post.postId}`}
+      className="rounded-3xl cursor-pointer relative flex justify-center md:block"
+    >
       <Image
         src={post.imgUrl}
         alt="post"
@@ -16,7 +20,7 @@ const Post = ({ post }: IPost) => {
         priority
         className="rounded-3xl"
       />
-    </div>
+    </Link>
   );
 };
 
