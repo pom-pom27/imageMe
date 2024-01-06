@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Provider from "./Provider";
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Navbar />
 
           {children}
+          <SpeedInsights />
 
           {/* Footer */}
           <Footer />
