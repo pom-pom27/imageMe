@@ -29,13 +29,15 @@ const UserInfo = ({ userInfo }: IUserInfo) => {
       <div className="flex flex-col items-center py-4">
         <div className="font-bold text-4xl pb-2 ">{userInfo?.username}</div>
         <div className=" text-gray-500 flex">
-          <Image
-            src="icon.svg"
-            alt="Pinterest logo"
-            width={20}
-            height={20}
-            className="grayscale mr-1"
-          />
+          {userInfo?.image && (
+            <Image
+              src="icon.svg"
+              alt="Pinterest logo"
+              width={20}
+              height={20}
+              className="grayscale mr-1"
+            />
+          )}
 
           {userInfo?.email}
         </div>

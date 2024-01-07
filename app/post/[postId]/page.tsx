@@ -2,6 +2,7 @@
 
 import firebaseApp from "@/firebaseConfig";
 import { PostData, UserData } from "@/types/userData";
+import { extractEmailToUserId } from "@/utils";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -87,7 +88,12 @@ const Page = ({ params }: IPage) => {
           <div className="flex-1 flex flex-col sm:gap-7 gap-4">
             <div className="text-2xl sm:text-5xl font-bold ">{post?.title}</div>
             {user ? (
-              <div className="flex gap-2">
+              <div
+                className="flex gap-2 cursor-pointer"
+                onClick={() =>
+                  router.push("/" + extractEmailToUserId(user.email))
+                }
+              >
                 <div className="flex justify-center items-center">
                   <Image
                     src={user?.image}

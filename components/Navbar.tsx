@@ -3,6 +3,7 @@
 import { navMenuLeft, navMenuRight } from "@/constant/navMenu";
 import firebaseApp from "@/firebaseConfig";
 import useClickOutside from "@/hooks/useClickOutside";
+import { extractEmailToUserId } from "@/utils";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
@@ -41,11 +42,7 @@ const Navbar = ({}: INavbar) => {
     }
   }, [session?.user?.email]);
 
-  const extractStringBeforeAt = (str: string) => {
-    return str.substring(0, str.indexOf("@"));
-  };
-
-  const useId = extractStringBeforeAt(session?.user?.email ?? "");
+  const useId = extractEmailToUserId(session?.user?.email ?? "");
 
   const handleSignIn = () => {
     signIn("google");
@@ -120,8 +117,8 @@ const Navbar = ({}: INavbar) => {
                 src={session.user.image!}
                 className="rounded-full"
                 alt="photo profile"
-                width={90}
-                height={90}
+                width={60}
+                height={60}
               />
             </button>
 
@@ -151,8 +148,8 @@ const Navbar = ({}: INavbar) => {
               <Image
                 src="/spin.svg"
                 alt="loading"
-                width={50}
-                height={50}
+                width={60}
+                height={60}
                 className="min-w-12"
               />
             )}

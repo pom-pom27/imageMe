@@ -5,7 +5,6 @@ import UserInfo from "@/components/UserInfo";
 import firebaseApp from "@/firebaseConfig";
 import { UserData } from "@/types/userData";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 interface IPage {
@@ -14,6 +13,7 @@ interface IPage {
 
 const Page = ({ params }: IPage) => {
   const [docState, setDocState] = useState<null | UserData>(null);
+  const [isUserNotFound, setisUserNotFound] = useState(false);
 
   const db = getFirestore(firebaseApp);
   const email = `${params.userId}@gmail.com`;
@@ -27,6 +27,7 @@ const Page = ({ params }: IPage) => {
     if (docSnap.exists()) {
       setDocState(docSnap.data() as UserData);
     } else {
+      setisUserNotFound(true);
       console.debug('"No such document!');
     }
   };
@@ -36,11 +37,19 @@ const Page = ({ params }: IPage) => {
   }, [params.userId]);
 
   return (
-    <main className="flex-1 mb-7">
-      <UserInfo userInfo={docState} />
-      <div>
-        <PostGrid userId={email} />
-      </div>
+    <main className=" flex-1 mb-7">
+      {isUserNotFound ? (
+        <div className="flex justify-center py-14 flex-col items-center">
+          <div>User not found.</div>
+        </div>
+      ) : (
+        <>
+          <UserInfo userInfo={docState} />
+          <div>
+            <PostGrid userId={email} />
+          </div>
+        </>
+      )}
     </main>
   );
 };
