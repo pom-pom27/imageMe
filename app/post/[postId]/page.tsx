@@ -1,69 +1,64 @@
-"use client";
-
+import CustomButton from "@/components/CustomLink";
 import firebaseApp from "@/firebaseConfig";
 import { PostData, UserData } from "@/types/userData";
 import { extractEmailToUserId } from "@/utils";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 
 interface IPage {
   params: { postId: string };
 }
 
-const Page = ({ params }: IPage) => {
-  const [post, setPost] = useState<PostData | null>(null);
-  const [user, setUser] = useState<UserData | null>(null);
+const db = getFirestore(firebaseApp);
 
-  const router = useRouter();
+const getPosts = async (postId: string) => {
+  const docRef = doc(db, "pinterest-post", postId);
+  const docSnap = await getDoc(docRef);
 
-  const db = getFirestore(firebaseApp);
+  let post;
 
-  useEffect(() => {
-    getData();
-  }, [params.postId]);
+  if (docSnap.exists()) {
+    post = docSnap.data() as PostData;
+  } else {
+    console.log("No such document!");
+  }
 
-  useEffect(() => {
-    if (post?.userId) {
-      getUserData(post?.userId);
-    }
-  }, [post?.userId]);
+  return post;
+};
 
-  const getData = async () => {
-    const docRef = doc(db, "pinterest-post", params.postId);
-    const docSnap = await getDoc(docRef);
+const getUserData = async (userId: string) => {
+  const docRef = doc(db, "users", userId);
+  const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      setPost(docSnap.data() as PostData);
-    } else {
-      console.log("No such document!");
-    }
-  };
+  let user;
 
-  const getUserData = async (userId: string) => {
-    const docRef = doc(db, "users", userId);
-    const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    user = docSnap.data() as UserData;
+  } else {
+    console.debug('"No such document!');
+  }
 
-    if (docSnap.exists()) {
-      setUser(docSnap.data() as UserData);
-    } else {
-      console.debug('"No such document!');
-    }
-  };
+  return user;
+};
+
+const Page = async ({ params }: IPage) => {
+  const post = await getPosts(params.postId);
+  const user = await getUserData(post?.userId!);
+
+  const email = extractEmailToUserId(user?.email);
+
+  console.log("user", user);
 
   return (
     <main className="flex flex-1 bg-gray-100 justify-center">
       <div className=" flex max-w-5xl  w-full sm:rounded-3xl bg-white sm:my-10 p-5 sm:p-10 sm:py-10 flex-col ">
-        <button
-          className=" hidden  rounded-full w-fit hover:bg-gray-200 p-4 text-3xl  sm:flex"
-          onClick={() => {
-            router.back();
-          }}
+        <CustomButton
+          className="hidden  rounded-full w-fit hover:bg-gray-200 p-4 text-3xl  sm:flex"
+          isBack
         >
           <IoArrowBack />
-        </button>
+        </CustomButton>
 
         <div className="flex w-full flex-col sm:flex-row  max-w-[700px] self-center gap-8">
           <div className="flex-1 flex justify-center items-center">
@@ -87,32 +82,24 @@ const Page = ({ params }: IPage) => {
           </div>
           <div className="flex-1 flex flex-col sm:gap-7 gap-4">
             <div className="text-2xl sm:text-5xl font-bold ">{post?.title}</div>
-            {user ? (
-              <div
-                className="flex gap-2 cursor-pointer"
-                onClick={() =>
-                  router.push("/" + extractEmailToUserId(user.email))
-                }
-              >
-                <div className="flex justify-center items-center">
-                  <Image
-                    src={user?.image}
-                    alt="profile photo"
-                    width={30}
-                    height={30}
-                    className="rounded-full"
-                  />
-                </div>
-                <div>
-                  <div className="text-sm">{user?.username}</div>
-                  <div className="text-sm text-gray-400">{user?.email}</div>
-                </div>
+            <CustomButton
+              push={"/" + email}
+              className="flex gap-2 cursor-pointer"
+            >
+              <div className="flex justify-center items-center">
+                <Image
+                  src={user?.image!}
+                  alt="profile photo"
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
               </div>
-            ) : (
-              <div className="flex w-full justify-center items-center">
-                <Image src="/spin.svg" alt="loading" width={50} height={50} />
+              <div className="flex flex-col items-start">
+                <div className="text-sm">{user?.username}</div>
+                <div className="text-sm text-gray-400">{user?.email}</div>
               </div>
-            )}
+            </CustomButton>
 
             <div className="">
               {post?.description.length === 0

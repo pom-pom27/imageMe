@@ -1,5 +1,3 @@
-"use client";
-
 import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 
 interface IFooter {}

@@ -1,5 +1,3 @@
-"use client";
-
 import firebaseApp from "@/firebaseConfig";
 import { PostData } from "@/types/userData";
 import {
@@ -9,46 +7,35 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import Post from "./Post";
 
 interface IPostGrid {
   userId?: string | null;
 }
 
-const PostGrid = ({ userId }: IPostGrid) => {
-  const db = getFirestore(firebaseApp);
+const db = getFirestore(firebaseApp);
 
-  const [listPost, setListPost] = useState<PostData[] | null>(null);
+const getUserPosts = async (userId: string) => {
+  let q;
 
-  useEffect(() => {
-    if (!listPost) {
-      getUserPosts();
-    }
-  }, []);
+  if (!userId) {
+    q = query(collection(db, "pinterest-post"));
+  } else {
+    q = query(collection(db, "pinterest-post"), where("userId", "==", userId));
+  }
 
-  const getUserPosts = async () => {
-    let q;
+  const querySnapshot = await getDocs(q);
+  let data: PostData[] = [];
 
-    if (!userId) {
-      q = query(collection(db, "pinterest-post"));
-    } else {
-      q = query(
-        collection(db, "pinterest-post"),
-        where("userId", "==", userId)
-      );
-    }
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    data = [...data, doc.data() as PostData];
+  });
 
-    const querySnapshot = await getDocs(q);
-    let data: PostData[] = [];
-
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      data = [...data, doc.data() as PostData];
-    });
-
-    setListPost(data);
-  };
+  return data;
+};
+const PostGrid = async ({ userId }: IPostGrid) => {
+  const listPost = await getUserPosts(userId!);
 
   if (listPost?.length === 0)
     return <div className="flex w-full justify-center">Pin is Empty.</div>;
