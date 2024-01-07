@@ -15,7 +15,7 @@ interface IPostGrid {
 
 const db = getFirestore(firebaseApp);
 
-const getUserPosts = async (userId: string) => {
+const getUserPosts = async (userId?: string | null) => {
   let q;
 
   if (!userId) {
@@ -35,7 +35,7 @@ const getUserPosts = async (userId: string) => {
   return data;
 };
 const PostGrid = async ({ userId }: IPostGrid) => {
-  const listPost = await getUserPosts(userId!);
+  const listPost = await getUserPosts(userId);
 
   if (listPost?.length === 0)
     return <div className="flex w-full justify-center">Pin is Empty.</div>;

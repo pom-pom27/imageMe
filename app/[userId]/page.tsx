@@ -17,7 +17,7 @@ const getUserData = async (email: string) => {
   if (docSnap.exists()) {
     userData = docSnap.data() as UserData;
   } else {
-    console.log('"No such document!');
+    // console.log('"No such document!');
   }
 
   return userData;

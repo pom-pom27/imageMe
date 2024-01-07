@@ -49,9 +49,6 @@ const Page = async ({ params }: IPage) => {
 
   const ownerId = extractEmailToUserId(owner?.email);
 
-  console.log("email", owner?.email);
-  console.log("postid userId", post?.userId);
-
   return (
     <main className="flex flex-1 bg-gray-100 justify-center">
       <div className=" flex max-w-5xl  w-full sm:rounded-3xl bg-white sm:my-10 p-5 sm:p-10 sm:py-10 flex-col ">
