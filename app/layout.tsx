@@ -30,8 +30,8 @@ export default function RootLayout({
           {/* Footer */}
           <Footer />
           <SpeedInsights />
-          <Analytics />
         </Provider>
+        <Analytics />
       </body>
     </html>
   );
