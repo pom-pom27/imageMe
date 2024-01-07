@@ -1,11 +1,11 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Provider from "./Provider";
 import "./globals.css";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,10 +26,11 @@ export default function RootLayout({
           <Navbar />
 
           {children}
-          <SpeedInsights />
 
           {/* Footer */}
           <Footer />
+          <SpeedInsights />
+          <Analytics />
         </Provider>
       </body>
     </html>
