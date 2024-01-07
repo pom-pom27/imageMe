@@ -1,3 +1,4 @@
+"use client";
 import firebaseApp from "@/firebaseConfig";
 import { PostData } from "@/types/userData";
 import {
