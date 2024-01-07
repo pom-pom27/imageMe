@@ -21,7 +21,7 @@ const getPosts = async (postId: string) => {
   if (docSnap.exists()) {
     post = docSnap.data() as PostData;
   } else {
-    console.log("No such document!");
+    // console.log("No such document!");
   }
 
   return post;
@@ -47,8 +47,6 @@ const Page = async ({ params }: IPage) => {
   const user = await getUserData(post?.userId!);
 
   const email = extractEmailToUserId(user?.email);
-
-  console.log("user", user);
 
   return (
     <main className="flex flex-1 bg-gray-100 justify-center">
