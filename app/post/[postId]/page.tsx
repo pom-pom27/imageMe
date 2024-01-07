@@ -4,6 +4,7 @@ import { PostData, UserData } from "@/types/userData";
 import { extractEmailToUserId } from "@/utils";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import Image from "next/image";
+import Link from "next/link";
 import { IoArrowBack } from "react-icons/io5";
 
 interface IPage {
@@ -36,7 +37,7 @@ const getUserData = async (userId: string) => {
   if (docSnap.exists()) {
     user = docSnap.data() as UserData;
   } else {
-    console.debug('"No such document!');
+    // console.debug('"No such document!');
   }
 
   return user;
@@ -44,9 +45,12 @@ const getUserData = async (userId: string) => {
 
 const Page = async ({ params }: IPage) => {
   const post = await getPosts(params.postId);
-  const user = await getUserData(post?.userId!);
+  const owner = await getUserData(post?.userId!);
 
-  const email = extractEmailToUserId(user?.email);
+  const ownerId = extractEmailToUserId(owner?.email);
+
+  console.log("email", owner?.email);
+  console.log("postid userId", post?.userId);
 
   return (
     <main className="flex flex-1 bg-gray-100 justify-center">
@@ -80,13 +84,10 @@ const Page = async ({ params }: IPage) => {
           </div>
           <div className="flex-1 flex flex-col sm:gap-7 gap-4">
             <div className="text-2xl sm:text-5xl font-bold ">{post?.title}</div>
-            <CustomButton
-              push={"/" + email}
-              className="flex gap-2 cursor-pointer"
-            >
+            <Link href={"/" + ownerId} className="flex gap-2 cursor-pointer">
               <div className="flex justify-center items-center">
                 <Image
-                  src={user?.image!}
+                  src={owner?.image ?? ""}
                   alt="profile photo"
                   width={30}
                   height={30}
@@ -94,10 +95,10 @@ const Page = async ({ params }: IPage) => {
                 />
               </div>
               <div className="flex flex-col items-start">
-                <div className="text-sm">{user?.username}</div>
-                <div className="text-sm text-gray-400">{user?.email}</div>
+                <div className="text-sm">{owner?.username}</div>
+                <div className="text-sm text-gray-400">{owner?.email}</div>
               </div>
-            </CustomButton>
+            </Link>
 
             <div className="">
               {post?.description.length === 0
