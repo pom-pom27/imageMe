@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import PostGrid from "@/components/PostGrid";
 
 export default function Home() {

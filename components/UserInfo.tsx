@@ -7,7 +7,7 @@ interface IUserInfo {
 
 const UserInfo = ({ userInfo }: IUserInfo) => {
   return (
-    <div className="flex justify-center flex-col items-center py-10 ">
+    <div className="flex justify-center flex-col items-center py-10  ">
       <Image
         src={userInfo?.image}
         alt="profile photo"

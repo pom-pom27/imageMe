@@ -8,6 +8,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { useSession } from "next-auth/react";
+import { revalidatePath } from "next/cache";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -94,6 +95,7 @@ const Index = ({}: IIndex) => {
 
     try {
       await setDoc(doc(db, "pinterest-post", postId), formData);
+      revalidatePath("/");
       router.push("/");
     } catch (error) {
       // console.debug("Error: " + error);

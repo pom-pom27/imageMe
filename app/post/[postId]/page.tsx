@@ -61,28 +61,21 @@ const Page = async ({ params }: IPage) => {
 
         <div className="flex w-full flex-col sm:flex-row  max-w-[700px] self-center gap-8">
           <div className="flex-1 flex justify-center items-center">
-            {post?.imgUrl ? (
-              <Image
-                src={post?.imgUrl}
-                alt={post.title}
-                width={700}
-                height={700}
-                className="rounded-lg"
-              />
-            ) : (
-              <Image
-                src="/spin.svg"
-                alt="loading"
-                width={70}
-                height={70}
-                className="w-full"
-              />
-            )}
+            <Image
+              src={post?.imgUrl ?? ""}
+              alt={post?.title ?? ""}
+              width={700}
+              height={700}
+              className="rounded-lg"
+            />
           </div>
           <div className="flex-1 flex flex-col sm:gap-7 gap-4">
             <div className="text-2xl sm:text-5xl font-bold ">{post?.title}</div>
-            <Link href={"/" + ownerId} className="flex gap-2 cursor-pointer">
-              <div className="flex justify-center items-center">
+            <Link
+              href={"/" + ownerId}
+              className="flex gap-2 cursor-pointer bg-gray-100 p-2 rounded-lg "
+            >
+              <div className="flex justify-center items-center ">
                 <Image
                   src={owner?.image ?? ""}
                   alt="profile photo"
@@ -93,7 +86,7 @@ const Page = async ({ params }: IPage) => {
               </div>
               <div className="flex flex-col items-start">
                 <div className="text-sm">{owner?.username}</div>
-                <div className="text-sm text-gray-400">{owner?.email}</div>
+                <div className="text-sm text-gray-500">{owner?.email}</div>
               </div>
             </Link>
 
