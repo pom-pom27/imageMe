@@ -5,7 +5,7 @@ import PostGrid from "@/components/PostGrid";
 export default function Home() {
   return (
     <main className="flex-1 mb-7">
-      <PostGrid key="211" />
+      <PostGrid />
     </main>
   );
 }
