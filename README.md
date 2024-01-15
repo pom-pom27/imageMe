@@ -1,8 +1,11 @@
-# Image Me
+# imageMe
 
 ## What
 
 A **Pinterest** clone built on top of Next js and Firebase.
+
+## Live Site
+[imageMe](https://imageme.vercel.app/)
 
 ## Getting Started
 
@@ -31,7 +34,7 @@ FIREBASE_API_KEY=
 
 ```
 
-## Tech
+## Stack
 
 - Next Js
 - NextAuth
