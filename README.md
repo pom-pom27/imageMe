@@ -34,7 +34,7 @@ FIREBASE_API_KEY=
 
 ```
 
-## Tech
+## Stack
 
 - Next Js
 - NextAuth
