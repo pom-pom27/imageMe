@@ -63,7 +63,7 @@ const Navbar = ({}: INavbar) => {
           alt="ImageMe logo"
           width={60}
           height={60}
-          className="p-2 hover:bg-gray-200 rounded-full min-w-[60px]"
+          className="p-2 hover:bg-gray-200 bg-white rounded-full min-w-[60px]"
         />
       </Link>
       <div className="flex font-medium flex-1">
