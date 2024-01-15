@@ -1,6 +1,6 @@
 "use client";
 
-import { navMenuLeft, navMenuRight } from "@/constant/navMenu";
+import { navMenuRight } from "@/constant/navMenu";
 import firebaseApp from "@/firebaseConfig";
 import useClickOutside from "@/hooks/useClickOutside";
 import { extractEmailToUserId } from "@/utils";
@@ -56,7 +56,7 @@ const Navbar = ({}: INavbar) => {
   }, [session]);
 
   return (
-    <div className="navbar sm:p-4 p-1 pt-2   flex items-center sm:pl-2 pl-0  md:gap-2">
+    <div className="navbar sm:p-4 p-1 pt-2 flex items-center sm:pl-2  gap-2">
       <Link href="/">
         <Image
           src="/icon.png"
@@ -66,23 +66,22 @@ const Navbar = ({}: INavbar) => {
           className="p-2 hover:bg-gray-200 rounded-full min-w-[60px]"
         />
       </Link>
-      <div className="flex font-medium">
-        {navMenuLeft.map((menu, idx) => (
-          <Link
-            href={menu.href}
-            key={idx}
-            className={`sm:p-3 sm:px-4 p-2 px-3 ${
-              pathname === menu.href ? "selected-nav-menu" : ""
-            }`}
-          >
-            {menu.text}
-          </Link>
-        ))}
+      <div className="flex font-medium flex-1">
+        <Link
+          href="/create"
+          className={`sm:p-3 sm:px-4 p-2 px-3 border-2 border-gray-200  rounded-full ${
+            pathname === "/create" ? "selected-nav-menu" : ""
+          }`}
+        >
+          Create
+        </Link>
       </div>
-      <button className="p-2 hover:bg-gray-200 rounded-full text-2xl text-gray-500 sm:hidden block ">
+
+      <button className="p-2 hover:bg-gray-200 rounded-full text-2xl text-gray-500 sm:hidden block justify-end">
         <HiOutlineSearch />
       </button>
-      <div className=" w-full hidden sm:block">
+
+      <div className=" w-full   sm:block hidden  ">
         <form action="" className="relative">
           <input
             type="text"
@@ -96,7 +95,7 @@ const Navbar = ({}: INavbar) => {
           </span>
         </form>
       </div>
-      <div className="flex sm:w-fit w-full justify-end items-center ">
+      <div className="flex   sm:flex-auto justify-end items-center ">
         {navMenuRight.map((menu, idx) => (
           <button
             key={idx}

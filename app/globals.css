@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .selected-nav-menu {
-  @apply bg-black text-white rounded-3xl;
+  @apply bg-black text-white rounded-3xl border-2 border-white;
 }
