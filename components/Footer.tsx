@@ -6,7 +6,7 @@ const Footer = ({}: IFooter) => {
   const linkedUlr = "https://www.linkedin.com/in/seljaworks/";
   const githubUrl = "https://github.com/pom-pom27";
   return (
-    <div className="flex items-center justify-center w-full p-7 bg-red-200">
+    <div className="flex items-center justify-center w-full p-7 bg-red bg-opacity-95 text-white">
       Created By Selja Sampe Rante.
       <a
         href={linkedUlr}

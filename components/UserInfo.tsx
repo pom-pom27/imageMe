@@ -20,9 +20,9 @@ const UserInfo = ({ userInfo }: IUserInfo) => {
         <div className="font-bold text-4xl pb-2 ">{userInfo?.username}</div>
         <div className=" text-gray-500 flex">
           <Image
-            src="/icon.svg"
-            alt="Pinterest logo"
-            width={20}
+            src="/icon.png"
+            alt="Image Me logo"
+            width={24}
             height={20}
             className="grayscale mr-1"
           />

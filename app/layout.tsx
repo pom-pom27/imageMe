@@ -8,7 +8,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Pinterest Clone",
+  title: "imageMe. | Discover many beautiful photo from around the world",
   description: "Discover many beautiful photo from around the world",
 };
 

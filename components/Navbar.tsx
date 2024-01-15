@@ -59,11 +59,11 @@ const Navbar = ({}: INavbar) => {
     <div className="navbar sm:p-4 p-1 pt-2   flex items-center sm:pl-2 pl-0  md:gap-2">
       <Link href="/">
         <Image
-          src="/icon.svg"
-          alt="Pinterest logo"
-          width={50}
-          height={50}
-          className="p-3 hover:bg-gray-200 rounded-full min-w-[50px]"
+          src="/icon.png"
+          alt="ImageMe logo"
+          width={60}
+          height={60}
+          className="p-2 hover:bg-gray-200 rounded-full min-w-[60px]"
         />
       </Link>
       <div className="flex font-medium">

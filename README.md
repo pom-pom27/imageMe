@@ -1,4 +1,4 @@
-# Pinterest clone
+# Image Me
 
 ## What
 
