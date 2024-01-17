@@ -95,7 +95,7 @@ const Page = async ({ params }: IPage) => {
                 ? "No Description available."
                 : post?.description}
             </div>
-            <div className="text-red font-semibold">
+            <div className="text-primary font-semibold">
               {post?.tag.length === 0 ? "No tags available." : post?.tag}
             </div>
             <a
