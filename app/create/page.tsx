@@ -112,7 +112,7 @@ const Index = ({}: IIndex) => {
                   e.preventDefault();
                   handleFileUpload();
                 }}
-                className="bg-red-500 p-3 px-4 rounded-full text-white font-semibold hover:bg-red-600 active:bg-red-400"
+                className="bg-primary p-3 px-4 rounded-full text-white font-semibold hover:bg-red-600 active:bg-red-400"
               >
                 Publish
               </button>
